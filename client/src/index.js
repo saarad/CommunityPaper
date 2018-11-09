@@ -6,6 +6,10 @@ import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert } from './widgets';
 import { studentService } from './services';
+import {CaseService} from "./services";
+import {Homepage} from "./homepage";
+import {CaseView} from "./caseView";
+import {NavbarCard} from "./cards/navbarCard";
 
 // Reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
@@ -16,61 +20,50 @@ if (process.env.NODE_ENV !== 'production') {
 
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
+let caseService = new CaseService();
 
 class Menu extends Component {
   render() {
     return (
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <NavLink activeStyle={{ color: 'darkblue' }} exact to="/">
-                React example
-              </NavLink>
-            </td>
-            <td>
-              <NavLink activeStyle={{ color: 'darkblue' }} to="/students">
-                Students
-              </NavLink>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <div className="card">
+          <div className="card-body" style={{background: 'darkblue'}}>
+              <nav className="navbar navbar-collapse align-top" style={{background: 'darkblue'}}>
+                  <NavLink style={{color: 'silver'}}
+                           className="navbar-toggler"
+                           exact to="/">
+                      <h2>Kalvskinnet Times </h2>
+                  </NavLink>
+                  <NavbarCard title={'økonomi'} path={'okonomi'}/>
+                  <NavbarCard title={'sport'} path={'sport'}/>
+                  <NavbarCard title={'underholdning'} path={'underholdning'}/>
+
+              </nav>
+          </div>
+        </div>
     );
   }
 }
 
-class Home extends Component {
-  render() {
-    return <div>React example with component state</div>;
-  }
-}
+
 
 class StudentList extends Component {
   students = [];
 
   render() {
     return (
-      <ul>
-        {this.students.map(student => (
-          <li key={student.email}>
-            <NavLink activeStyle={{ color: 'darkblue' }} exact to={'/students/' + student.id}>
-              {student.firstName} {student.lastName}
-            </NavLink>{' '}
-            <NavLink activeStyle={{ color: 'darkblue' }} to={'/students/' + student.id + '/edit'}>
-              edit
-            </NavLink>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <h2> {this.students} </h2>
+      </div>
     );
   }
 
   mounted() {
+    studentService.getStudents().then(response => console.log(response[0]));
     studentService
       .getStudents()
-      .then(students => (this.students = students))
+      .then(students => (this.students = students[0].overskrift))
       .catch((error: Error) => Alert.danger(error.message));
+
   }
 }
 
@@ -99,7 +92,7 @@ class StudentDetails extends Component<{ match: { params: { id: number } } }> {
   }
 }
 
-class StudentEdit extends Component<{ match: { params: { id: number } } }> {
+class StudentEdit extends Component<{ match: { params: { title: string } } }> {
   student = null;
 
   render() {
@@ -112,32 +105,13 @@ class StudentEdit extends Component<{ match: { params: { id: number } } }> {
             First name:{' '}
             <input
               type="text"
-              value={this.student.firstName}
+              value={this.student.title}
               onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                if (this.student) this.student.firstName = event.target.value;
+                if (this.student) this.student.title = event.target.value;
               }}
             />
           </li>
-          <li>
-            Last name:{' '}
-            <input
-              type="text"
-              value={this.student.lastName}
-              onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                if (this.student) this.student.lastName = event.target.value;
-              }}
-            />
-          </li>
-          <li>
-            Email:{' '}
-            <input
-              type="text"
-              value={this.student.email}
-              onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                if (this.student) this.student.email = event.target.value;
-              }}
-            />
-          </li>
+
         </ul>
         <button type="button" onClick={this.save}>
           Save
@@ -174,7 +148,8 @@ if (root)
       <div>
         <Alert />
         <Menu />
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Homepage} />
+        <Route path="/:title" component={CaseView} />
         <Route path="/students" component={StudentList} />
         <Route exact path="/students/:id" component={StudentDetails} />
         <Route exact path="/students/:id/edit" component={StudentEdit} />
