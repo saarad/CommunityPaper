@@ -47,11 +47,19 @@ app.get('/importantCases', (req: Request,res:Response) => {
    });
 });
 
-app.get('/importantCases/:caseTitle', (req: Request, res: Response) => {
-    console.log('Case with id ' + req.params.title + ' loading');
-    sakDao.getContextForNews(req.params.title, (status,data) => {
+app.get('/importantCases/:overskrift', (req: Request, res: Response) => {
+    console.log('Case with title ' + req.params.overskrift + ' loading');
+    sakDao.getContextForNews(req.params.overskrift, (status,data) => {
        res.status(status);
        res.json(data);
+    });
+});
+
+app.get('/category/:kategori',(req: Request, res: Response) => {
+    console.log('Category ' + req.params.kategori + ' loading');
+    sakDao.getCategoryNews(req.params.kategori,(status,data) => {
+        res.status(status);
+        res.json(data);
     });
 });
 

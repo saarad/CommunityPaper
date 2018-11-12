@@ -26,8 +26,13 @@ export class CaseService{
   }//end method
 
   getCaseContent(title: string): Promise<News>{
-    console.log(axios.get('/importantCases/' + title));
+    console.log(axios.get('/' + title));
     return axios.get('/importantCases/' + title);
+  }//end method
+
+  getCategory(category: string): Promise<News[]>{
+    console.log(axios.get('/category/' + category));
+    return axios.get('/category/' + category);
   }//end method
 
 }//end class

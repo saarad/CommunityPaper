@@ -6,7 +6,7 @@ export class NavbarCard extends Component<{title: string, path:string}>{
         return(
             <NavLink activeStyle={{color: 'black'}} style={{color: 'white'}}
                      className="navbar-toggler"
-                     exact to={'/'+this.props.path}>
+                     exact to={'/category/'+ this.props.path}>
                 <h5>{this.props.title} </h5>
             </NavLink>
         )

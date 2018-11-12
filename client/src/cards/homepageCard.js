@@ -6,11 +6,11 @@ export class HomepageCard extends Component<{title: string, pic: string}>{
     render(){
         return(
           <div style={{background: 'silver'}}>
-              <div className="card container col-6">
-                  <img className="card-img-top" src={this.props.pic} width ='50' height='300'/>
+              <div className="card container col-6 display-1">
+                  <img className="card-img-top" src={this.props.pic}/>
                   <div className="card-body">
                       <h5 className="card-title"> {this.props.title}</h5>
-                      <NavLink className="btn btn-primary" to={'/' + this.props.title}>
+                      <NavLink className="btn btn-primary" to={'/case/' + this.props.title}>
                         Les innhold
                       </NavLink>
                   </div>

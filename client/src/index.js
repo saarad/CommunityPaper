@@ -10,6 +10,7 @@ import {CaseService} from "./services";
 import {Homepage} from "./homepage";
 import {CaseView} from "./caseView";
 import {NavbarCard} from "./cards/navbarCard";
+import {CategoryView} from "./categoryView";
 
 // Reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
@@ -27,23 +28,38 @@ class Menu extends Component {
     return (
         <div className="card">
           <div className="card-body" style={{background: 'darkblue'}}>
-              <nav className="navbar navbar-collapse align-top" style={{background: 'darkblue'}}>
+              <nav className="navbar navbar-collapse align-top float-left" style={{background: 'darkblue'}}>
                   <NavLink style={{color: 'silver'}}
                            className="navbar-toggler"
                            exact to="/">
                       <h2>Kalvskinnet Times </h2>
                   </NavLink>
-                  <NavbarCard title={'økonomi'} path={'okonomi'}/>
-                  <NavbarCard title={'sport'} path={'sport'}/>
-                  <NavbarCard title={'underholdning'} path={'underholdning'}/>
+                  <NavbarCard title={'Samfunn'} path={'Samfunn'}/>
+                  <NavbarCard title={'Økonomi'} path={'Okonomi'}/>
+                  <NavbarCard title={'Sport'} path={'Sport'}/>
+                  <NavbarCard title={'Underholdning'} path={'Underholdning'}/>
+                  <NavbarCard title={'IT'} path={'IT'}/>
+                  <NavbarCard title={'Annet'} path={'Annet'}/>
 
               </nav>
           </div>
         </div>
     );
-  }
-}
+  }//end method
+}//end class
 
+class Footer extends Component{
+    render(){
+        return(
+                <div className="card-footer card-columns" style={{color: 'silver',background: 'blue'}}>
+                    Contact info: iliar@stud.ntnu.no
+                    <h6 className="text-center">
+                        &copy;<br/> Ilia Rad Saadat
+                    </h6>
+                </div>
+            )
+    }//end method
+}//end class
 
 
 class StudentList extends Component {
@@ -149,10 +165,12 @@ if (root)
         <Alert />
         <Menu />
         <Route exact path="/" component={Homepage} />
-        <Route path="/:title" component={CaseView} />
+        <Route path="/category/:category" component={CategoryView} />
+        <Route path="/case/:title" component={CaseView} />
         <Route path="/students" component={StudentList} />
         <Route exact path="/students/:id" component={StudentDetails} />
         <Route exact path="/students/:id/edit" component={StudentEdit} />
+        <Footer />
       </div>
     </HashRouter>,
     root

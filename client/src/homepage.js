@@ -15,8 +15,9 @@ export class Homepage extends Component<>{
     render() {
         console.log('At homepage');
         return(
-            (this.casesTitle.map((e,i) => {
-                return <HomepageCard title={e} pic={this.casesPic[i]}/>
+
+            (this.casesTitle.map((e,i)  => {
+                return <HomepageCard key={e} title={e} pic={this.casesPic[i]}/>
             }))
     )
     }//end method
