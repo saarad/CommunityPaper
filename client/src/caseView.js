@@ -3,8 +3,8 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert } from './widgets';
-import {CaseService} from "./services";
+import { Alert } from './servicesAndWidgets/widgets';
+import {CaseService} from "./servicesAndWidgets/services";
 import {ContentCard} from "./cards/contentCard";
 
 let caseService = new CaseService();

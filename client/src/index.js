@@ -4,13 +4,14 @@ import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { Alert } from './widgets';
-import { studentService } from './services';
-import {CaseService} from "./services";
+import { Alert } from './servicesAndWidgets/widgets';
+import { studentService } from './servicesAndWidgets/services';
+import {CaseService} from "./servicesAndWidgets/services";
 import {Homepage} from "./homepage";
 import {CaseView} from "./caseView";
 import {NavbarCard} from "./cards/navbarCard";
 import {CategoryView} from "./categoryView";
+import {AddNewCase} from "./addNewCase";
 
 // Reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
@@ -29,6 +30,9 @@ class Menu extends Component {
         <div className="card">
           <div className="card-body" style={{background: 'darkblue'}}>
               <nav className="navbar navbar-collapse align-top float-left" style={{background: 'darkblue'}}>
+                  <NavLink exact to="/">
+                      <img className="align-content-end" src="https://tihlde.org/assets/2015/02/tihlde-normal-1_03.png" height='100' width='100'/>
+                  </NavLink>
                   <NavLink style={{color: 'silver'}}
                            className="navbar-toggler"
                            exact to="/">
@@ -40,7 +44,14 @@ class Menu extends Component {
                   <NavbarCard title={'Underholdning'} path={'Underholdning'}/>
                   <NavbarCard title={'IT'} path={'IT'}/>
                   <NavbarCard title={'Annet'} path={'Annet'}/>
-
+                  <div className="my-2 my-lg-0">
+                      <NavLink className="mr-sm-2 navbar-toggler" style={{color: 'white'}}
+                      to="/leggTilSaker">
+                          <img className="float-right" src="https://img.icons8.com/cotton/2x/plus.png"
+                          height='40' width='40'/>{' '}
+                          <h4 className="float-right my-2 my-sm-2">Legg til saker </h4>
+                      </NavLink>
+                  </div>
               </nav>
           </div>
         </div>
@@ -167,6 +178,7 @@ if (root)
         <Route exact path="/" component={Homepage} />
         <Route path="/category/:category" component={CategoryView} />
         <Route path="/case/:title" component={CaseView} />
+        <Route path="/leggTilSaker" component={AddNewCase} />
         <Route path="/students" component={StudentList} />
         <Route exact path="/students/:id" component={StudentDetails} />
         <Route exact path="/students/:id/edit" component={StudentEdit} />

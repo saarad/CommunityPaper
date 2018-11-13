@@ -1,3 +1,6 @@
+// @flow
+/* eslint eqeqeq: "off" */
+
 import { Component } from 'react-simplified';
 import {NavLink} from "react-router-dom";
 import * as React from "react";
