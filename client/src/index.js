@@ -5,13 +5,13 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert } from './servicesAndWidgets/widgets';
-import { studentService } from './servicesAndWidgets/services';
 import {CaseService} from "./servicesAndWidgets/services";
 import {Homepage} from "./homepage";
 import {CaseView} from "./caseView";
 import {NavbarCard} from "./cards/navbarCard";
 import {CategoryView} from "./categoryView";
 import {AddNewCase} from "./addNewCase";
+import {ConfirmAddCase} from "./confirmAddCase";
 
 // Reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
@@ -20,11 +20,10 @@ if (process.env.NODE_ENV !== 'production') {
   if (document.body) document.body.appendChild(script);
 }
 
-import createHashHistory from 'history/createHashHistory';
-const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
 let caseService = new CaseService();
 
 class Menu extends Component {
+    categories: string[] = [];
   render() {
     return (
         <div className="card">
@@ -38,16 +37,15 @@ class Menu extends Component {
                            exact to="/">
                       <h2>Kalvskinnet Times </h2>
                   </NavLink>
-                  <NavbarCard title={'Samfunn'} path={'Samfunn'}/>
-                  <NavbarCard title={'Økonomi'} path={'Okonomi'}/>
-                  <NavbarCard title={'Sport'} path={'Sport'}/>
-                  <NavbarCard title={'Underholdning'} path={'Underholdning'}/>
-                  <NavbarCard title={'IT'} path={'IT'}/>
-                  <NavbarCard title={'Annet'} path={'Annet'}/>
+                  {
+                      this.categories.map(e => {
+                         return <NavbarCard key={e} title={e} path={e}/>
+                      })
+                  }
                   <div className="my-2 my-lg-0">
                       <NavLink className="mr-sm-2 navbar-toggler" style={{color: 'white'}}
                       to="/leggTilSaker">
-                          <img className="float-right" src="https://img.icons8.com/cotton/2x/plus.png"
+                          <img className="float-right" src="https://img.icons8.com/metro/1600/plus-2-math.png"
                           height='40' width='40'/>{' '}
                           <h4 className="float-right my-2 my-sm-2">Legg til saker </h4>
                       </NavLink>
@@ -57,6 +55,13 @@ class Menu extends Component {
         </div>
     );
   }//end method
+
+    mounted(){
+      caseService.getAllCategories().then(response => {
+          response.map(e => this.categories.push(e.navn));
+      }).catch((error:Error) => Alert.danger(error.message));
+    }//end method
+
 }//end class
 
 class Footer extends Component{
@@ -72,101 +77,43 @@ class Footer extends Component{
     }//end method
 }//end class
 
+export class LiveFeed extends Component{
+    casesTitle: string[] = [];
+    casesTime: string[] = [];
+    render(){
+        return(
+            <div className="navbar navbar-collapse navbar-toggler" style={{background: 'white', height: 30}}>
+                <marquee behaviour="slide" scrolldelay="50" truespeed="true">
+                    {
+                        this.casesTitle.map((e,i) => {
+                            return <i key={e} className="table-hover">-{e} {'   '} {this.casesTime[i]}{'  '}</i>
+                        })
+                    }
+                </marquee>
+            </div>
+        )
+    }//end method
 
-class StudentList extends Component {
-  students = [];
+    mounted(){
+        caseService.getCases().then(response => {
+            response.map(e => {
+                this.casesTitle.push(e.overskrift);
+                this.casesTime.push(e.tidspunkt);
+            });
+        }).catch((error: Error) => Alert.danger(error.message));
+    }//end method
 
-  render() {
-    return (
-      <div>
-        <h2> {this.students} </h2>
-      </div>
-    );
-  }
+    updateLiveFeed(){
+        caseService.getCases().then(response => {
+            response.map(e => {
+                this.casesTitle.push(e.overskrift);
+                this.casesTime.push(e.tidspunkt);
+            });
+        }).catch((error: Error) => Alert.danger(error.message));
+    }//end method
+}//end class
 
-  mounted() {
-    studentService.getStudents().then(response => console.log(response[0]));
-    studentService
-      .getStudents()
-      .then(students => (this.students = students[0].overskrift))
-      .catch((error: Error) => Alert.danger(error.message));
 
-  }
-}
-
-class StudentDetails extends Component<{ match: { params: { id: number } } }> {
-  student = null;
-
-  render() {
-    if (!this.student) return null;
-
-    return (
-      <div>
-        <ul>
-          <li>First name: {this.student.firstName}</li>
-          <li>Last name: {this.student.lastName}</li>
-          <li>Email: {this.student.email}</li>
-        </ul>
-      </div>
-    );
-  }
-
-  mounted() {
-    studentService
-      .getStudent(this.props.match.params.id)
-      .then(student => (this.student = student))
-      .catch((error: Error) => Alert.danger(error.message));
-  }
-}
-
-class StudentEdit extends Component<{ match: { params: { title: string } } }> {
-  student = null;
-
-  render() {
-    if (!this.student) return null;
-
-    return (
-      <form>
-        <ul>
-          <li>
-            First name:{' '}
-            <input
-              type="text"
-              value={this.student.title}
-              onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                if (this.student) this.student.title = event.target.value;
-              }}
-            />
-          </li>
-
-        </ul>
-        <button type="button" onClick={this.save}>
-          Save
-        </button>
-      </form>
-    );
-  }
-
-  mounted() {
-    studentService
-      .getStudent(this.props.match.params.id)
-      .then(student => (this.student = student))
-      .catch((error: Error) => Alert.danger(error.message));
-  }
-
-  save() {
-    if (!this.student) return null;
-
-    studentService
-      .updateStudent(this.student)
-      .then(() => {
-        let studentList = StudentList.instance();
-        if (studentList) studentList.mounted(); // Update Studentlist-component
-        if (this.student) history.push('/students/' + this.student.id);
-      })
-      .catch((error: Error) => Alert.danger(error.message));
-  }
-}
 
 const root = document.getElementById('root');
 if (root)
@@ -175,13 +122,13 @@ if (root)
       <div>
         <Alert />
         <Menu />
+        <LiveFeed />
         <Route exact path="/" component={Homepage} />
         <Route path="/category/:category" component={CategoryView} />
         <Route path="/case/:title" component={CaseView} />
         <Route path="/leggTilSaker" component={AddNewCase} />
-        <Route path="/students" component={StudentList} />
-        <Route exact path="/students/:id" component={StudentDetails} />
-        <Route exact path="/students/:id/edit" component={StudentEdit} />
+        <Route path="/bekreft" component={ConfirmAddCase} />
+
         <Footer />
       </div>
     </HashRouter>,

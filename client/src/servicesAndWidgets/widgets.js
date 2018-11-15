@@ -15,7 +15,7 @@ export class Alert extends Component {
       <>
         {this.alerts.map((alert, i) => (
           <div key={i} className={'alert alert-' + alert.type} role="alert">
-            {alert.text}
+              {alert.text}
             <button
               className="close"
               onClick={() => {

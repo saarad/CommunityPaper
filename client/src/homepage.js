@@ -17,9 +17,13 @@ export class Homepage extends Component<>{
         return(
 
             (this.casesTitle.map((e,i)  => {
-                return <HomepageCard key={e} title={e} pic={this.casesPic[i]}/>
-            }))
-    )
+                if (i !== 19) //Only allow 20 cases to get loaded at the homepage
+                {
+                    return (
+                        <HomepageCard key={e} title={e} pic={this.casesPic[i]}/>)
+                }//end condition
+            })))
+
     }//end method
 
     mounted(){
