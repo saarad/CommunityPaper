@@ -17,7 +17,7 @@ export class ContentCard extends Component<{title: string; highlightedText:strin
                         <h6 className="font-italic"> {this.props.highlightedText}</h6>
                         <br/>
                         <p className="card-text"> {this.props.text}</p>
-                        <div className="card-footer text-center text-muted">Publisert {this.props.time} </div>
+                        <div className="card-footer text-center text-muted">Sist redigert {this.props.time} </div>
                     </div>
                 </div>
             </div>

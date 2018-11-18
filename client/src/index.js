@@ -12,6 +12,10 @@ import {NavbarCard} from "./cards/navbarCard";
 import {CategoryView} from "./categoryView";
 import {AddNewCase} from "./addNewCase";
 import {ConfirmAddCase} from "./confirmAddCase";
+import {AdminPage} from "./adminPage";
+import {InteractWithCase} from "./interactWithCase";
+import {Edit} from "./interactWithCase";
+import {DeleteCase} from "./deleteCase";
 
 // Reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
@@ -44,10 +48,10 @@ class Menu extends Component {
                   }
                   <div className="my-2 my-lg-0">
                       <NavLink className="mr-sm-2 navbar-toggler" style={{color: 'white'}}
-                      to="/leggTilSaker">
+                      to="/adminPage">
                           <img className="float-right" src="https://img.icons8.com/metro/1600/plus-2-math.png"
                           height='40' width='40'/>{' '}
-                          <h4 className="float-right my-2 my-sm-2">Legg til saker </h4>
+                          <h4 className="float-right my-2 my-sm-2"> Admin Login</h4>
                       </NavLink>
                   </div>
               </nav>
@@ -83,7 +87,7 @@ export class LiveFeed extends Component{
     render(){
         return(
             <div className="navbar navbar-collapse navbar-toggler" style={{background: 'white', height: 30}}>
-                <marquee behaviour="slide" scrolldelay="50" truespeed="true">
+                <marquee behaviour="slide" scrolldelay="40" truespeed="true">
                     {
                         this.casesTitle.map((e,i) => {
                             return <i key={e} className="table-hover">-{e} {'   '} {this.casesTime[i]}{'  '}</i>
@@ -126,9 +130,12 @@ if (root)
         <Route exact path="/" component={Homepage} />
         <Route path="/category/:category" component={CategoryView} />
         <Route path="/case/:title" component={CaseView} />
+        <Route path="/adminPage" component={AdminPage} />
         <Route path="/leggTilSaker" component={AddNewCase} />
         <Route path="/bekreft" component={ConfirmAddCase} />
-
+        <Route path="/velgSakRediger" component={InteractWithCase} />
+        <Route path="/redigerSak" component={Edit}/>
+        <Route path="/velgSakSlett" component={DeleteCase}/>
         <Footer />
       </div>
     </HashRouter>,

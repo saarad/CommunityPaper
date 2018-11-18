@@ -37,11 +37,9 @@ app.get('/allCases', (req: Request, res: Response) => {
 
 
 app.get('/importantCases', (req: Request,res:Response) => {
-   console.log('Homepage loading');
    sakDao.getImportantNews((status,data) => {
       res.status(status);
       res.json(data);
-      data.map(e => console.log(e));
    });
 });
 
@@ -69,8 +67,24 @@ app.get('/category/:kategori',(req: Request, res: Response) => {
 });
 
 app.post('/addCases', (req: Request, res: Response) => {
-    console.log('Adding case ' + req.body);
-    sakDao.createNews(req.body.id,req.body, (status, data) =>{
+    console.log('Adding case ' + req.body.title);
+    sakDao.createNews(req.body, (status, data) =>{
+       res.status(status);
+       res.json(data);
+    });
+});
+
+app.put('/editCases', (req: Request, res: Response) =>{
+    console.log('Editing case ' + req.body.title);
+    sakDao.editNews(req.body,(status, data) => {
+       res.status(status);
+       res.json(data);
+    });
+});
+
+app.put('/deleteCases', (req: Request, res: Response) => {
+    sakDao.deleteNews(req.body, (status,data) => {
+        console.log('Deleting ' + req.body.id);
        res.status(status);
        res.json(data);
     });

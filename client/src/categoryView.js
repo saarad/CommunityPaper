@@ -22,15 +22,16 @@ export class CategoryView extends Component<{match: {params: {category: string}}
     }//end method
 
     mounted(){
-        caseService.getCategory(this.props.match.params.category).then(response => console.log(response[0]));
+        this.casesTitle = []; //empty buffer when the state changes
+        this.casesPic = []; //empty buffer when the state changes
         caseService.getCategory(this.props.match.params.category).then(response => {
             response.map(e =>{
-                this.casesTitle = [];
             this.casesTitle.push(e.overskrift)});
             response.map(e => {
-                this.casesPic = [];
                 this.casesPic.push(e.bilde)
             });
         }).catch((error:Error) => Alert.danger(error.message));
     }//end method
+
+
 }//end class

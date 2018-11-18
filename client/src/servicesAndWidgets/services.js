@@ -47,10 +47,16 @@ export class CaseService{
 
   addCase(news: News): Promise<void>{
     console.log(axios.post('/addCases'), news);
-    this.getAllCases().then(response => {
-      news.setId(response.length); //updating the id before sending object to server
-    }).catch((error: Error) => Alert.danger(error.message));
     return axios.post('/addCases', news);
+  }//end method
+
+  editCase(news: News): Promise<void>{
+    return axios.put('/editCases',news);
+  }//end method
+
+  deleteCase(news: News): Promise<void>{
+    console.log('deleting ' + news.id);
+    return axios.put('/deleteCases',news);
   }//end method
 
 }//end class

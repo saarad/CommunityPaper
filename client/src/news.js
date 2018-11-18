@@ -6,7 +6,7 @@ import {Importance} from './importance.js';
 
 
 export class News{
-    id: number;
+    id: number = 8;
     title: string;
     highlightedText: string;
     time: string;
@@ -14,11 +14,10 @@ export class News{
     context: string;
     category: Category;
     importance: Importance;
-    static nextID: number = 7;
+
 
     constructor(title: string, highlightedText:string, time: string, pic: string, context: string,
                 category: Category,importance: Importance){
-        this.id = News.nextID++;
         this.title = title;
         this.highlightedText = highlightedText;
         this.time = time;
