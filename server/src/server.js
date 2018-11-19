@@ -44,7 +44,6 @@ app.get('/importantCases', (req: Request,res:Response) => {
 });
 
 app.get('/importantCases/:overskrift', (req: Request, res: Response) => {
-    console.log('Case with title ' + req.params.overskrift + ' loading');
     sakDao.getContextForNews(req.params.overskrift, (status,data) => {
        res.status(status);
        res.json(data);
@@ -59,7 +58,6 @@ app.get('/allCategories', (req: Request, res: Response) => {
 });
 
 app.get('/category/:kategori',(req: Request, res: Response) => {
-    console.log('Category ' + req.params.kategori + ' loading');
     sakDao.getCategoryNews(req.params.kategori,(status,data) => {
         res.status(status);
         res.json(data);
@@ -67,7 +65,6 @@ app.get('/category/:kategori',(req: Request, res: Response) => {
 });
 
 app.post('/addCases', (req: Request, res: Response) => {
-    console.log('Adding case ' + req.body.title);
     sakDao.createNews(req.body, (status, data) =>{
        res.status(status);
        res.json(data);
@@ -75,7 +72,6 @@ app.post('/addCases', (req: Request, res: Response) => {
 });
 
 app.put('/editCases', (req: Request, res: Response) =>{
-    console.log('Editing case ' + req.body.title);
     sakDao.editNews(req.body,(status, data) => {
        res.status(status);
        res.json(data);
@@ -84,7 +80,28 @@ app.put('/editCases', (req: Request, res: Response) =>{
 
 app.put('/deleteCases', (req: Request, res: Response) => {
     sakDao.deleteNews(req.body, (status,data) => {
-        console.log('Deleting ' + req.body.id);
+       res.status(status);
+       res.json(data);
+    });
+});
+
+app.get('/getKey', (req: Request, res: Response) => {
+   sakDao.getKey((status,data) => {
+      res.status(status);
+      res.json(data);
+   });
+});
+
+app.get('/getComments/:overskrift', (req: Request, res: Response) => {
+    sakDao.getComments(req.params.overskrift,(status,data) => {
+       res.status(status);
+       res.json(data);
+    });
+});
+
+app.post('/postComments/:id', (req: Request, res:
+    Response) => {
+    sakDao.postComments(req.params.id, req.body,(status,data) => {
        res.status(status);
        res.json(data);
     });

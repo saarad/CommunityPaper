@@ -2,27 +2,11 @@
 import axios from 'axios';
 axios.interceptors.response.use(response => response.data);
 import {News} from "../news";
-import {Alert} from "./widgets";
+import {Comments} from "../comments";
 
-class StudentService {
-  getStudents(): Promise<News[]> {
-    console.log(axios.get('/students'));
-    return axios.get('/students');
-  }
-
-  getStudent(id: number): Promise<News> {
-    return axios.get('/students/' + id);
-  }
-
-  updateStudent(student: News): Promise<void> {
-    return axios.put('/students', student);
-  }
-}
-export let studentService = new StudentService();
 
 export class CaseService{
   getCases(): Promise<News[]>{
-    console.log(axios.get('/importantCases'));
     return axios.get('/importantCases');
   }//end method
 
@@ -36,17 +20,14 @@ export class CaseService{
 
 
   getCaseContent(title: string): Promise<News>{
-    console.log(axios.get('/' + title));
     return axios.get('/importantCases/' + title);
   }//end method
 
   getCategory(category: string): Promise<News[]>{
-    console.log(axios.get('/category/' + category));
     return axios.get('/category/' + category);
   }//end method
 
   addCase(news: News): Promise<void>{
-    console.log(axios.post('/addCases'), news);
     return axios.post('/addCases', news);
   }//end method
 
@@ -55,8 +36,19 @@ export class CaseService{
   }//end method
 
   deleteCase(news: News): Promise<void>{
-    console.log('deleting ' + news.id);
     return axios.put('/deleteCases',news);
+  }//end method
+
+  getKey(): Promise<string>{
+    return axios.get('/getKey');
+  }//end method
+
+  getComments(news:News): Promise<Comments[]>{
+    return axios.get('/getComments/' + news.title);
+  }//end method
+
+  postComments(news:News,comment:Comments): Promise<void>{
+    return axios.post('/postComments/' + news.id, comment);
   }//end method
 
 }//end class

@@ -15,7 +15,7 @@ export class SakDao extends Dao {
     }//end method
 
     getContextForNews(title:string,callback){
-        super.query("select overskrift,innhold,bilde,tidspunkt,kategori,viktighet,brodtekst from sak where overskrift=?",
+        super.query("select id,overskrift,innhold,bilde,tidspunkt,kategori,viktighet,brodtekst from sak where overskrift=?",
             [title],callback);
     }//end method
 
@@ -39,7 +39,18 @@ export class SakDao extends Dao {
     }//end method
 
     deleteNews(json,callback){
-        console.log(json.id);
         super.query("update sak set aktiv=0 where id=?",[json.id],callback);
+    }//end method
+
+    getKey(callback){
+        super.query("select passord from admin where brukernavn=?",['key'],callback);
+    }//end method
+
+    getComments(title:string,callback){
+        super.query("select navn,kommentar from kommentar where sak =(select id from sak where overskrift =?)",[title], callback);
+    }//end method
+
+    postComments(newsId,json,callback){
+        super.query("insert into kommentar(navn,kommentar,sak) values(?,?,?)", [json.name,json.comment, newsId], callback);
     }//end method
 };

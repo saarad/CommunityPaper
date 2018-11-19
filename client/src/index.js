@@ -16,6 +16,7 @@ import {AdminPage} from "./adminPage";
 import {InteractWithCase} from "./interactWithCase";
 import {Edit} from "./interactWithCase";
 import {DeleteCase} from "./deleteCase";
+import {AdminLogin} from "./adminLogin";
 
 // Reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {
@@ -48,7 +49,7 @@ class Menu extends Component {
                   }
                   <div className="my-2 my-lg-0">
                       <NavLink className="mr-sm-2 navbar-toggler" style={{color: 'white'}}
-                      to="/adminPage">
+                      to="/logIn">
                           <img className="float-right" src="https://img.icons8.com/metro/1600/plus-2-math.png"
                           height='40' width='40'/>{' '}
                           <h4 className="float-right my-2 my-sm-2"> Admin Login</h4>
@@ -130,6 +131,7 @@ if (root)
         <Route exact path="/" component={Homepage} />
         <Route path="/category/:category" component={CategoryView} />
         <Route path="/case/:title" component={CaseView} />
+        <Route path="/logIn" component={AdminLogin} />
         <Route path="/adminPage" component={AdminPage} />
         <Route path="/leggTilSaker" component={AddNewCase} />
         <Route path="/bekreft" component={ConfirmAddCase} />
