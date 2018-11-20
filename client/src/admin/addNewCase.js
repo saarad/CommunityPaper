@@ -127,6 +127,7 @@ export class AddNewCase extends Component{
             news = new News(this.title,this.highlightedText,this.time,this.pic,this.text,new Category(this.category),new Importance(this.chosenImportance));
             history.push('/bekreft');
         }else{
+            
             Alert.danger('Fyll ut hele formen før du fortsetter');
         }//end condition
     }//end method

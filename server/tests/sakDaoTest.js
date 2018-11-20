@@ -86,7 +86,7 @@ test("Testing creating a case", done => {
         importance:{importance: 1}},callback);
 
     //Deleting case from database
-    sakDao.deletePermenantly({title: "Test", highlightedText: "Test",
+    sakDao.deletePermanently({title: "Test", highlightedText: "Test",
         time: "19/11/2018 KL: 22.20", context: "Jest tests", pic: "No pic", category:{title: "Annet"},
         importance:{importance: 1}},callback2);
 });
