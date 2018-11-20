@@ -6,17 +6,17 @@ import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert } from './servicesAndWidgets/widgets';
 import {CaseService} from "./servicesAndWidgets/services";
-import {Homepage} from "./user/homepage";
-import {CaseView} from "./user/caseView";
+import {Homepage} from "./userComponents/homepage";
+import {CaseView} from "./userComponents/caseView";
 import {NavbarCard} from "./cards/navbarCard";
-import {CategoryView} from "./user/categoryView";
-import {AddNewCase} from "./admin/addNewCase";
-import {ConfirmAddCase} from "./admin/confirmAddCase";
-import {AdminPage} from "./admin/adminPage";
-import {InteractWithCase} from "./admin/interactWithCase";
-import {Edit} from "./admin/interactWithCase";
-import {DeleteCase} from "./admin/deleteCase";
-import {AdminLogin} from "./admin/adminLogin";
+import {CategoryView} from "./userComponents/categoryView";
+import {AddNewCase} from "./adminComponents/addNewCase";
+import {ConfirmAddCase} from "./adminComponents/confirmAddCase";
+import {AdminPage} from "./adminComponents/adminPage";
+import {InteractWithCase} from "./adminComponents/interactWithCase";
+import {Edit} from "./adminComponents/interactWithCase";
+import {DeleteCase} from "./adminComponents/deleteCase";
+import {AdminLogin} from "./adminComponents/adminLogin";
 
 // Reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {

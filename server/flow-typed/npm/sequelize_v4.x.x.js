@@ -1154,7 +1154,7 @@ declare module "sequelize" {
     /**
      * Set to true to run before-/afterDestroy hooks when an associated model is deleted because of a cascade.
      * For example if `User.hasOne(Profile, {onDelete: 'cascade', hooks:true})`, the before-/afterDestroy hooks
-    for profile will be called when a user is deleted. Otherwise the profile will be deleted without invoking
+    for profile will be called when a userComponents is deleted. Otherwise the profile will be deleted without invoking
     any hooks.
 
     Defaults to false
@@ -3815,11 +3815,11 @@ declare module "sequelize" {
      * Create an association that is either 1:m or n:m.
      *
      ```js
-     // Create a 1:m association between user and project
+     // Create a 1:m association between userComponents and project
      User.hasMany(Project)
      ```
      ```js
-     // Create a n:m association between user and project
+     // Create a n:m association between userComponents and project
      User.hasMany(Project)
      Project.hasMany(User)
      ```
@@ -3848,13 +3848,13 @@ declare module "sequelize" {
      p1.userprojects {
          started: true
       }
-     user.setProjects([p1, p2], {started: false}) // The default value is false, but p1 overrides that.
+     userComponents.setProjects([p1, p2], {started: false}) // The default value is false, but p1 overrides that.
      ```
 
      Similarily, when fetching through a join table with custom attributes, these attributes will be
      available as an object with the name of the through model.
      ```js
-     user.getProjects().then(function (projects) {
+     userComponents.getProjects().then(function (projects) {
          var p1 = projects[0]
          p1.userprojects.started // Is this project started yet?
       })
@@ -3898,13 +3898,13 @@ declare module "sequelize" {
      p1.userprojects {
          started: true
       }
-     user.setProjects([p1, p2], {started: false}) // The default value is false, but p1 overrides that.
+     userComponents.setProjects([p1, p2], {started: false}) // The default value is false, but p1 overrides that.
      ```
 
      Similarily, when fetching through a join table with custom attributes, these attributes will be
      available as an object with the name of the through model.
      ```js
-     user.getProjects().then(function (projects) {
+     userComponents.getProjects().then(function (projects) {
          var p1 = projects[0]
          p1.userprojects.started // Is this project started yet?
       })
@@ -4807,8 +4807,8 @@ declare module "sequelize" {
 
     /**
      * If true, transforms objects with `.` separated property names into nested objects using
-     * [dottie.js](https://github.com/mickhansen/dottie.js). For example { 'user.username': 'john' } becomes
-    { user: { username: 'john' }}. When `nest` is true, the query type is assumed to be `'SELECT'`,
+     * [dottie.js](https://github.com/mickhansen/dottie.js). For example { 'userComponents.username': 'john' } becomes
+    { userComponents: { username: 'john' }}. When `nest` is true, the query type is assumed to be `'SELECT'`,
     unless otherwise specified
 
     Defaults to false
@@ -6132,7 +6132,7 @@ declare module "sequelize" {
      function, you should use `sequelize.col`, so that the columns are properly interpreted as columns and
      not a strings.
 
-     Convert a user's username to upper case
+     Convert a userComponents's username to upper case
      ```js
      instance.updateAttributes({
        username: self.sequelize.fn('upper', self.sequelize.col('username'))
@@ -7001,7 +7001,7 @@ declare module "sequelize" {
       options?: QueryOptions): Promise<any>,
 
     /**
-     * Execute a query which would set an environment or user variable. The variables are set per connection,
+     * Execute a query which would set an environment or userComponents variable. The variables are set per connection,
      * so this function needs a transaction.
 
     Only works for MySQL.
@@ -7107,8 +7107,8 @@ declare module "sequelize" {
 
     ```js
     sequelize.transaction().then(function (t) {
-       return User.find(..., { transaction: t}).then(function (user) {
-       return user.updateAttributes(..., { transaction: t});
+       return User.find(..., { transaction: t}).then(function (userComponents) {
+       return userComponents.updateAttributes(..., { transaction: t});
        })
        .then(t.commit.bind(t))
        .catch(t.rollback.bind(t));
@@ -7120,8 +7120,8 @@ declare module "sequelize" {
 
     ```js
     sequelize.transaction(function (t) { // Note that we use a callback rather than a promise.then()
-       return User.find(..., { transaction: t}).then(function (user) {
-       return user.updateAttributes(..., { transaction: t});
+       return User.find(..., { transaction: t}).then(function (userComponents) {
+       return userComponents.updateAttributes(..., { transaction: t});
        });
     }).then(function () {
        // Commited

@@ -63,7 +63,7 @@ test("Testing getting all cases under one category", done => {
     sakDao.getCategoryNews('Sport',callback);
 });
 
-test("Testing logging in as an admin", done => {
+test("Testing logging in as an adminComponents", done => {
     function callback(status,data) {
         console.log("Test getKey. Status: " + status + " Data: " + JSON.stringify(data));
         expect(data[0].passord).toBeDefined();

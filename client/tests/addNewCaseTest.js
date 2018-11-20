@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import {AddNewCase} from "../src/admin/addNewCase";
+import {AddNewCase} from "../src/adminComponents/addNewCase";
 import { shallow, mount } from 'enzyme';
 
 describe('Testing adding a new case. This test will also validate editing a case, since they use the same validation methods', () => {
