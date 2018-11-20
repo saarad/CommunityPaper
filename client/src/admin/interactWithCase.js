@@ -3,13 +3,13 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert } from './servicesAndWidgets/widgets';
+import { Alert } from '../servicesAndWidgets/widgets';
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path
-import {CaseService} from "./servicesAndWidgets/services";
-import {News} from "./news";
-import {Category} from "./category";
-import {Importance} from "./importance";
+import {CaseService} from "../servicesAndWidgets/services";
+import {News} from "../news";
+import {Category} from "../user/category";
+import {Importance} from "../importance";
 
 let caseService = new CaseService();
 let news: News;
@@ -69,6 +69,8 @@ export class Edit extends Component{
     text: string = '';
     category: string = '';
     categories: string[] = [];
+    importance: number[] = [1,2,3,4,5];
+    chosenImportance: number = 0; //does not exist in database
     render(){
         return(
             <div className="bg-dark">
@@ -128,6 +130,21 @@ export class Edit extends Component{
                                 })
                             }
                         </select>
+
+                        <h3 style={{color: 'white'}}>Velg viktighet </h3>
+                        <select className="btn btn-secondary" onChange={this.setImportance}>
+                            <option value={this.chosenImportance} className="btn btn-secondary">
+                                {this.chosenImportance}
+                            </option>
+                            {
+                                this.importance.map(e => {
+                                    if(e !== this.importance)
+                                        return <option key={e} value={e} className="btn btn-secondary">
+                                            {e}
+                                        </option>
+                                })
+                            }
+                        </select>
                     </div>
 
                     <div className="text-center btn-group-lg">
@@ -146,6 +163,7 @@ export class Edit extends Component{
         this.pic = news.pic;
         this.text = news.context;
         this.category = news.category.title;
+        this.chosenImportance = news.importance.importance;
         caseService.getAllCategories().then(response => response.map(e => this.categories.push(e.navn))).
         catch((error: Error) => Alert.danger(error.message));
     }//end method
@@ -158,7 +176,7 @@ export class Edit extends Component{
             this.text !== '' && this.category !== ''){
             if(confirm('Lagre?')){
                 let editedNews: News = new News(this.title,this.highlightedText,this.time,this.pic,this.text,
-                    new Category(this.category),new Importance(news.importance));
+                    new Category(this.category),new Importance(this.chosenImportance));
                 editedNews.setId(news.id);
                 caseService.editCase(editedNews);
                 Alert.success('Du har endret på sak med tittelen ' + editedNews.title);
@@ -172,5 +190,9 @@ export class Edit extends Component{
 
     setCategory(event:Event){
         this.category = event.target.value;
+    }//end method
+
+    setImportance(event: Event){
+        this.chosenImportance = event.target.value
     }//end method
 }//end class

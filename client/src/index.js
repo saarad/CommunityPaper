@@ -6,17 +6,17 @@ import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Alert } from './servicesAndWidgets/widgets';
 import {CaseService} from "./servicesAndWidgets/services";
-import {Homepage} from "./homepage";
-import {CaseView} from "./caseView";
+import {Homepage} from "./user/homepage";
+import {CaseView} from "./user/caseView";
 import {NavbarCard} from "./cards/navbarCard";
-import {CategoryView} from "./categoryView";
-import {AddNewCase} from "./addNewCase";
-import {ConfirmAddCase} from "./confirmAddCase";
-import {AdminPage} from "./adminPage";
-import {InteractWithCase} from "./interactWithCase";
-import {Edit} from "./interactWithCase";
-import {DeleteCase} from "./deleteCase";
-import {AdminLogin} from "./adminLogin";
+import {CategoryView} from "./user/categoryView";
+import {AddNewCase} from "./admin/addNewCase";
+import {ConfirmAddCase} from "./admin/confirmAddCase";
+import {AdminPage} from "./admin/adminPage";
+import {InteractWithCase} from "./admin/interactWithCase";
+import {Edit} from "./admin/interactWithCase";
+import {DeleteCase} from "./admin/deleteCase";
+import {AdminLogin} from "./admin/adminLogin";
 
 // Reload application when not in production environment
 if (process.env.NODE_ENV !== 'production') {

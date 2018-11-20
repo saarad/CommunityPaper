@@ -3,10 +3,10 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert } from './servicesAndWidgets/widgets';
+import { Alert } from '../servicesAndWidgets/widgets';
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path
-import {CaseService} from "./servicesAndWidgets/services";
+import {CaseService} from "../servicesAndWidgets/services";
 
 let caseService = new CaseService();
 

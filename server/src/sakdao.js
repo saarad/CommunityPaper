@@ -33,8 +33,8 @@ export class SakDao extends Dao {
 
     editNews(json,callback){
         let val = [json.title,json.highlightedText, json.time,json.context,
-            json.pic, json.category.title, json.id];
-        super.query("update sak set overskrift=?, brodtekst=?, tidspunkt=?, innhold=?, bilde=?, kategori=? where id =?",
+            json.pic, json.category.title, json.importance.importance, json.id];
+        super.query("update sak set overskrift=?, brodtekst=?, tidspunkt=?, innhold=?, bilde=?, kategori=?, viktighet=? where id =?",
             val, callback);
     }//end method
 
@@ -52,5 +52,9 @@ export class SakDao extends Dao {
 
     postComments(newsId,json,callback){
         super.query("insert into kommentar(navn,kommentar,sak) values(?,?,?)", [json.name,json.comment, newsId], callback);
+    }//end method
+
+    deletePermenantly(json,callback){
+        super.query("delete from sak where overskrift=?",[json.title],callback);
     }//end method
 };

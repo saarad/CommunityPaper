@@ -3,15 +3,15 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert } from './servicesAndWidgets/widgets';
-import {News} from "./news";
-import {Category} from "./category";
-import {Importance} from "./importance";
+import { Alert } from '../servicesAndWidgets/widgets';
+import {News} from "../news";
+import {Category} from "../user/category";
+import {Importance} from "../importance";
 export let news: News;
 let date = new Date();
 
 import createHashHistory from 'history/createHashHistory';
-import {CaseService} from "./servicesAndWidgets/services";
+import {CaseService} from "../servicesAndWidgets/services";
 const history = createHashHistory(); // Use history.push(...) to programmatically change path
 
 let caseService = new CaseService();
@@ -25,7 +25,8 @@ export class AddNewCase extends Component{
     text: string = '';
     category: string = '';
     categories: string[] = [];
-
+    importances: number[] = [1,2,3,4,5];
+    chosenImportance: number = 0; //value is not allowed in database
     render(){
         return(
             <div className="bg-dark">
@@ -70,7 +71,7 @@ export class AddNewCase extends Component{
                         rows="4"> </textarea>
 
                     </ul>
-                    <div className="">
+                    <div>
                         <h3 style={{color: 'white'}}>Velg kategori </h3>
                         <select className="btn btn-secondary" onChange={this.setCategory}>
                             <option value="" className="btn btn-secondary">
@@ -81,6 +82,20 @@ export class AddNewCase extends Component{
                                  return <option key={e} value={e} className="btn btn-secondary">
                                           {e}
                                   </option>
+                                })
+                            }
+                        </select>
+
+                        <h3 style={{color: 'white'}}>Velg viktighet </h3>
+                        <select className="btn btn-secondary" onChange={this.setImportance}>
+                            <option value={0} className="btn btn-secondary">
+                                Velg viktighet
+                            </option>
+                            {
+                                this.importances.map(e =>{
+                                    return <option key={e} value={e} className="btn btn-secondary">
+                                            {e}
+                                    </option>
                                 })
                             }
                         </select>
@@ -107,9 +122,9 @@ export class AddNewCase extends Component{
             date.getFullYear() + ' KL: ' + date.getHours() + ':' + date.getMinutes();
         console.log(this.time);
         if(this.title !== '' && this.pic !== '' && this.highlightedText !== '' &&
-        this.text !== '' && this.category !== ''){
+        this.text !== '' && this.category !== '' && this.chosenImportance !== 0){
             console.log(this.category);
-            news = new News(this.title,this.highlightedText,this.time,this.pic,this.text,new Category(this.category),new Importance(5));
+            news = new News(this.title,this.highlightedText,this.time,this.pic,this.text,new Category(this.category),new Importance(this.chosenImportance));
             history.push('/bekreft');
         }else{
             Alert.danger('Fyll ut hele formen før du fortsetter');
@@ -118,6 +133,10 @@ export class AddNewCase extends Component{
 
     setCategory(event:Event){
         this.category = event.target.value;
+    }//end method
+
+    setImportance(event: Event){
+        this.chosenImportance = event.target.value;
     }//end method
 }//end class
 

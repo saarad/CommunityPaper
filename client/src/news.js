@@ -1,6 +1,6 @@
 // @flow
 
-import {Category} from './category.js';
+import {Category} from './user/category.js';
 import {Importance} from './importance.js';
 
 

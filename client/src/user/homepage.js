@@ -3,9 +3,9 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert } from './servicesAndWidgets/widgets';
-import {CaseService} from "./servicesAndWidgets/services";
-import {HomepageCard} from "./cards/homepageCard";
+import { Alert } from '../servicesAndWidgets/widgets';
+import {CaseService} from "../servicesAndWidgets/services";
+import {HomepageCard} from "../cards/homepageCard";
 
 let caseService = new CaseService();
 

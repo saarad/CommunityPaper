@@ -3,13 +3,13 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert } from './servicesAndWidgets/widgets';
-import {CaseService} from "./servicesAndWidgets/services";
-import {ContentCard} from "./cards/contentCard";
-import {Comments} from "./comments";
-import {News} from "./news";
+import { Alert } from '../servicesAndWidgets/widgets';
+import {CaseService} from "../servicesAndWidgets/services";
+import {ContentCard} from "../cards/contentCard";
+import {Comments} from "../comments";
+import {News} from "../news";
 import {Category} from "./category";
-import {Importance} from "./importance";
+import {Importance} from "../importance";
 
 
 let news:News;

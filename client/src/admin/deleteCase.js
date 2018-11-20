@@ -3,13 +3,13 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert } from './servicesAndWidgets/widgets';
+import { Alert } from '../servicesAndWidgets/widgets';
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path
-import {CaseService} from "./servicesAndWidgets/services";
-import {News} from "./news";
-import {Category} from "./category";
-import {Importance} from "./importance";
+import {CaseService} from "../servicesAndWidgets/services";
+import {News} from "../news";
+import {Category} from "../user/category";
+import {Importance} from "../importance";
 
 let caseService = new CaseService();
 let chosenNews: News;

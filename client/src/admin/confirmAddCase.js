@@ -3,11 +3,11 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert } from './servicesAndWidgets/widgets';
+import { Alert } from '../servicesAndWidgets/widgets';
 import {news} from "./addNewCase";
-import {News} from "./news";
-import {CaseService} from "./servicesAndWidgets/services";
-import {LiveFeed} from "./index";
+import {News} from "../news";
+import {CaseService} from "../servicesAndWidgets/services";
+import {LiveFeed} from "../index";
 
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path
@@ -32,6 +32,11 @@ export class ConfirmAddCase extends Component{
                 <div className="container bg-light">
                     <h4> Kategori: </h4>
                     <div className="text-info"> {this.news.category.title}</div>
+                </div>
+
+                <div className="container bg-light">
+                    <h4> Viktighet: </h4>
+                    <div className="text-info"> {this.news.importance.importance}</div>
                 </div>
 
                 <div className="container bg-light">
