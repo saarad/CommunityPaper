@@ -10,6 +10,8 @@ import {Comments} from "../comments";
 import {News} from "../news";
 import {Category} from "../category";
 import {Importance} from "../importance";
+import createHashHistory from 'history/createHashHistory';
+const history = createHashHistory(); // Use history.push(...) to programmatically change path
 
 
 let news:News;
@@ -74,13 +76,14 @@ export class CaseView extends Component<{match: {params: {title: string}}}>{
             caseService.getComments(news).then(response => {
                 response.map(e => {
                     this.comments.push(new Comments(e.navn,e.kommentar));
-                    if(!noComments){
+
+                    if(!noComments){ //Give no default message
                         this.comments.filter(e => e !== this.comments[0]);
                         noComments = true;
                     }
                 });
 
-                //If there is no comments
+                //If there is no comments give default message
                 if(this.comments[0] === undefined){
                     this.comments.push(new Comments('Ingen kommentarer enda', 'Vær den første til å kommentere'));
                     noComments = false;
@@ -93,18 +96,17 @@ export class CaseView extends Component<{match: {params: {title: string}}}>{
         if(this.nickname !== '' && this.userComment !== ''){
             let newComment: Comments = new Comments(this.nickname,this.userComment);
             if(confirm('Legge til kommentar? ' + '\nNickname: ' + this.nickname + '\nKommentar: ' + this.userComment)){
+                history.push('/case/' + news.title);
+                caseService.postComments(news,newComment).then(response => { //posting and then loading comment
 
-                caseService.postComments(news,newComment).then(response => { //post comment and then load it
                     caseService.getComments(news).then(response => {
                         response.map(e => {
-                            this.comments.push(new Comments(e.navn,e.kommentar));
-                            if(!noComments){
-                                this.comments.filter(e => e !== this.comments[0]);
-                                noComments = true;
-                            }
-                        });
+                            if(e.navn !== this.comments.map(f => f.name))this.comments.push(new Comments(e.navn,e.kommentar));
+                        })
                     }).catch((error: Error) => Alert.danger(error.message));
-                }).catch((error: Error) => Alert.danger(error.message));
+
+
+                    }).catch((error: Error) => Alert.danger(error.message));
             }//end condition
         }else{
             confirm('Begge feltene må være fylt for å legge til en kommentar!')

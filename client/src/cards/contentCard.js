@@ -30,6 +30,8 @@ export class ContentCard extends Component<{title: string; highlightedText:strin
                                         <div className="card-body font-italic">
                                             {e.comment}
                                         </div>
+                                        <br/>
+                                        <br/>
                                     </div>
                                 )
                             })
