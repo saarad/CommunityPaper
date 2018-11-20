@@ -7,8 +7,6 @@ import { Alert } from '../servicesAndWidgets/widgets';
 import {news} from "./addNewCase";
 import {News} from "../news";
 import {CaseService} from "../servicesAndWidgets/services";
-import {LiveFeed} from "../index";
-
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path
 

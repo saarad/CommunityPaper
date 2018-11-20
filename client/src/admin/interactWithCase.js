@@ -8,7 +8,7 @@ import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path
 import {CaseService} from "../servicesAndWidgets/services";
 import {News} from "../news";
-import {Category} from "../user/category";
+import {Category} from "../category";
 import {Importance} from "../importance";
 
 let caseService = new CaseService();
@@ -71,6 +71,7 @@ export class Edit extends Component{
     categories: string[] = [];
     importance: number[] = [1,2,3,4,5];
     chosenImportance: number = 0; //does not exist in database
+    added: boolean = false;
     render(){
         return(
             <div className="bg-dark">
@@ -170,10 +171,12 @@ export class Edit extends Component{
 
     save(){
        this.time = date.getDate() + '/' + (date.getUTCMonth()+1) + '/' +
-        date.getFullYear() + ' KL: ' + date.getHours() + ':' + date.getMinutes();
+       date.getFullYear() + ' KL: ' + date.getHours() + ':' + date.getMinutes();
 
-        if(this.title !== '' && this.pic !== '' && this.highlightedText !== '' &&
-            this.text !== '' && this.category !== ''){
+       this.added = this.title !== '' && this.pic !== '' && this.highlightedText !== '' &&
+           this.text !== '' && this.category !== '';
+
+        if(this.added){
             if(confirm('Lagre?')){
                 let editedNews: News = new News(this.title,this.highlightedText,this.time,this.pic,this.text,
                     new Category(this.category),new Importance(this.chosenImportance));
@@ -183,7 +186,7 @@ export class Edit extends Component{
                 history.push('/');
             }//end condition
         }else{
-            Alert.danger('Du må fylle ut alle feltene!');
+            confirm('Du må fylle ut alle feltene!');
         }//end condition
 
     }//end method

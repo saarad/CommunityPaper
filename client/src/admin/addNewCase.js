@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Alert } from '../servicesAndWidgets/widgets';
 import {News} from "../news";
-import {Category} from "../user/category";
+import {Category} from "../category";
 import {Importance} from "../importance";
 export let news: News;
 let date = new Date();
@@ -27,6 +27,7 @@ export class AddNewCase extends Component{
     categories: string[] = [];
     importances: number[] = [1,2,3,4,5];
     chosenImportance: number = 0; //value is not allowed in database
+    added: boolean = false;
     render(){
         return(
             <div className="bg-dark">
@@ -67,7 +68,9 @@ export class AddNewCase extends Component{
                         className=" my-sm-3 form-control"
                         id="content"
                         value={this.text}
-                        onChange={(event: SyntheicInputEvent<HTMLInputElement>) => (this.text = event.target.value)}
+                        onChange={(event: SyntheicInputEvent<HTMLInputElement>) => {
+                            (this.text = event.target.value);
+                        }}
                         rows="4"> </textarea>
 
                     </ul>
@@ -118,17 +121,17 @@ export class AddNewCase extends Component{
     }//end method
 
     save(){
+        this.added = this.title !== '' && this.pic !== '' && this.highlightedText !== '' &&
+            this.text !== '' && this.category !== '' && this.chosenImportance !== 0;
+
         this.time = date.getDate() + '/' + (date.getUTCMonth()+1) + '/' +
             date.getFullYear() + ' KL: ' + date.getHours() + ':' + date.getMinutes();
-        console.log(this.time);
-        if(this.title !== '' && this.pic !== '' && this.highlightedText !== '' &&
-        this.text !== '' && this.category !== '' && this.chosenImportance !== 0){
-            console.log(this.category);
+
+        if(this.added){
             news = new News(this.title,this.highlightedText,this.time,this.pic,this.text,new Category(this.category),new Importance(this.chosenImportance));
             history.push('/bekreft');
         }else{
-            
-            Alert.danger('Fyll ut hele formen før du fortsetter');
+            confirm('Fyll ut alle feltene!');
         }//end condition
     }//end method
 

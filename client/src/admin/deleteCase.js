@@ -8,7 +8,7 @@ import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path
 import {CaseService} from "../servicesAndWidgets/services";
 import {News} from "../news";
-import {Category} from "../user/category";
+import {Category} from "../category";
 import {Importance} from "../importance";
 
 let caseService = new CaseService();

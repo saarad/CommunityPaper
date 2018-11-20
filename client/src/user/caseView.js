@@ -8,7 +8,7 @@ import {CaseService} from "../servicesAndWidgets/services";
 import {ContentCard} from "../cards/contentCard";
 import {Comments} from "../comments";
 import {News} from "../news";
-import {Category} from "./category";
+import {Category} from "../category";
 import {Importance} from "../importance";
 
 
@@ -17,14 +17,14 @@ let caseService = new CaseService();
 let noComments: boolean = true;
 
 export class CaseView extends Component<{match: {params: {title: string}}}>{
-    id: number = 0; //0 don't exist in database
+    id: number = 0; //0 doesn't exist in database
     title: string = '';
     pic: string = '';
     highlight: string = '';
     text: string ='';
     time: string = '';
     category:string = '';
-    importance:number = 0; //0 don't exist in database
+    importance:number = 0; //0 doesn't exist in database
     comments: Comments[] = [];
     nickname:string = '';
     userComment:string = '';
@@ -67,8 +67,10 @@ export class CaseView extends Component<{match: {params: {title: string}}}>{
             this.time = response[0].tidspunkt;
             this.category = response[0].kategori;
             this.importance = response[0].viktighet;
+
             news = new News(this.title,this.highlight,this.time,this.pic,this.text,new Category(this.category),new Importance(this.importance));
             news.setId(this.id);
+
             caseService.getComments(news).then(response => {
                 response.map(e => {
                     this.comments.push(new Comments(e.navn,e.kommentar));
@@ -77,6 +79,8 @@ export class CaseView extends Component<{match: {params: {title: string}}}>{
                         noComments = true;
                     }
                 });
+
+                //If there is no comments
                 if(this.comments[0] === undefined){
                     this.comments.push(new Comments('Ingen kommentarer enda', 'Vær den første til å kommentere'));
                     noComments = false;
@@ -89,7 +93,8 @@ export class CaseView extends Component<{match: {params: {title: string}}}>{
         if(this.nickname !== '' && this.userComment !== ''){
             let newComment: Comments = new Comments(this.nickname,this.userComment);
             if(confirm('Legge til kommentar? ' + '\nNickname: ' + this.nickname + '\nKommentar: ' + this.userComment)){
-                caseService.postComments(news,newComment).then(response => {
+
+                caseService.postComments(news,newComment).then(response => { //post comment and then load it
                     caseService.getComments(news).then(response => {
                         response.map(e => {
                             this.comments.push(new Comments(e.navn,e.kommentar));
@@ -102,7 +107,7 @@ export class CaseView extends Component<{match: {params: {title: string}}}>{
                 }).catch((error: Error) => Alert.danger(error.message));
             }//end condition
         }else{
-            Alert.danger('Begge feltene må være fylt!')
+            confirm('Begge feltene må være fylt for å legge til en kommentar!')
         }//end condition
     }//end method
 }//end class

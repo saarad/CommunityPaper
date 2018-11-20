@@ -113,6 +113,12 @@ export class LiveFeed extends Component{
             response.map(e => {
                 this.casesTitle.push(e.overskrift);
                 this.casesTime.push(e.tidspunkt);
+                this.casesTitle.filter((e,i) => {
+                    if(i !== this.casesTitle.length) return e !== this.casesTitle[i+1];
+                });
+                this.casesTime.filter((e,i) =>{
+                   if(i !== this.casesTime.length) return e !== this.casesTime[i+1];
+                });
             });
         }).catch((error: Error) => Alert.danger(error.message));
     }//end method

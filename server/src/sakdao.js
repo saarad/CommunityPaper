@@ -3,7 +3,7 @@
 const Dao = require("./dao.js");
 export class SakDao extends Dao {
     getImportantNews(callback:Function){
-        super.query("select overskrift,bilde,tidspunkt from sak where viktighet=5 and aktiv=1",[],callback);
+        super.query("select id,overskrift,bilde,tidspunkt from sak where viktighet=5 and aktiv=1",[],callback);
     }//end method
 
     getAllNews(callback:Function){

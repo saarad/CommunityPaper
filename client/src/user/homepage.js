@@ -12,17 +12,22 @@ let caseService = new CaseService();
 export class Homepage extends Component<>{
     casesTitle: string[] = [];
     casesPic: string[] = [];
+    counter:number = 0;
     render() {
         console.log('At homepage');
         return(
+            <div>
 
-            (this.casesTitle.map((e,i)  => {
-                if (i !== 19) //Only allow 20 cases to get loaded at the homepage
+                {this.casesTitle.map((e,i)  => {
+                    console.log(this.counter);
+                if (i <19) //Only allow 20 cases to get loaded at the homepage
                 {
                     return (
                         <HomepageCard key={e} title={e} pic={this.casesPic[i]}/>)
                 }//end condition
-            })))
+            })}
+            </div>
+        )
 
     }//end method
 
