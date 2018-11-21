@@ -43,7 +43,7 @@ export class SakDao extends Dao {
     }//end method
 
     getKey(callback:Function){
-        super.query("select passord from adminComponents where brukernavn=?",['key'],callback);
+        super.query("select passord from admin where brukernavn=?",['key'],callback);
     }//end method
 
     getComments(title:string,callback:Function){

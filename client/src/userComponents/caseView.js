@@ -99,11 +99,7 @@ export class CaseView extends Component<{match: {params: {title: string}}}>{
                 history.push('/case/' + news.title);
                 caseService.postComments(news,newComment).then(response => { //posting and then loading comment
 
-                    caseService.getComments(news).then(response => {
-                        response.map(e => {
-                            if(e.navn !== this.comments.map(f => f.name))this.comments.push(new Comments(e.navn,e.kommentar));
-                        })
-                    }).catch((error: Error) => Alert.danger(error.message));
+                    this.comments.push(newComment);
 
 
                     }).catch((error: Error) => Alert.danger(error.message));
